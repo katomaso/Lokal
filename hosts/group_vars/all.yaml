@@ -13,6 +13,9 @@ server_is_live: true
 hcloud_token: 
 vagrant_ip: 10.180.0.102
 
+lang: en_US
+lang_encoding: en_US.UTF-8
+
 ## Cloud Provider Variables
 # primary_ssh_user: ubuntu # replace with ansible_user
 hcloud_image: ubuntu-20.04
@@ -30,34 +33,33 @@ namecheap_api_key:
 
 # Container Variables
 docker_pgid: $(grep docker /etc/group | cut -d ':' -f 3)
-puid: $(id -u)
-pgid: $(id -g)
 tz: $(realpath /etc/localtime | grep -oP "^/usr/share/zoneinfo/\K.*")
 domain_vnet: ${DOMAIN}
 domain_vnet_local: vnet.lokal.network
-domain_wordpress: ${DOMAIN_VNET}
-domain_wordpress_www: www.${DOMAIN_VNET}
-domain_traefik: router.${DOMAIN_VNET}
-domain_netdata: monitor.${DOMAIN_VNET}
-domain_prometheus: metrics.${DOMAIN_VNET}
-domain_grafana: dash.${DOMAIN_VNET}
-domain_matomo: analytics.${DOMAIN_VNET}
+domain_wordpress: {{domain_vnet}}
+domain_wordpress_www: www.{{domain_vnet}}
+domain_traefik: router.{{domain_vnet}}
+domain_netdata: monitor.{{domain_vnet}}
+domain_prometheus: metrics.{{domain_vnet}}
+domain_grafana: dash.{{domain_vnet}}
+domain_matomo: analytics.{{domain_vnet}}
 domain_resourcespace: assets.${DOMAIN}
-domain_mailhog: mailhog.${DOMAIN_VNET}
-domain_kiwix: learn.${DOMAIN_VNET}
-domain_transmission: torrent.${DOMAIN_VNET}
+domain_mailhog: mailhog.{{domain_vnet}}
+domain_kiwix: learn.{{domain_vnet}}
+domain_transmission: torrent.{{domain_vnet}}
 domain_nextcloud: nextcloud.${DOMAIN}
-domain_portainer: portainer.${DOMAIN_VNET}
-domain_unifi_controller: unifi.${DOMAIN_VNET}
-domain_jellyfin: video.${DOMAIN_VNET}
-domain_kolibri: edu.${DOMAIN_VNET}
-kiwix_data_dir: ${PROJECT_ROOT}/config/services/kiwix/data
-transmission_config_dir: ${PROJECT_ROOT}/config/services/transmission/config
-transmission_downloads_dir: ${PROJECT_ROOT}/config/services/transmission/downloads
-transmission_watch_dir: ${PROJECT_ROOT}/config/services/transmission/watch
-nextcloud_config_dir: ${PROJECT_ROOT}/config/services/nextcloud/config
-jellyfin_config_dir: ${PROJECT_ROOT}/config/services/jellyfin/config
-jellyfin_data_dir: ${PROJECT_ROOT}/config/services/jellyfin/data
+domain_portainer: portainer.{{domain_vnet}}
+domain_unifi_controller: unifi.{{domain_vnet}}
+domain_jellyfin: video.{{domain_vnet}}
+domain_kolibri: edu.{{domain_vnet}}
+domain_azuracast: radio.{{domain}}
+kiwix_data_dir: {{project_root}}/config/services/kiwix/data
+transmission_config_dir: {{project_root}}/config/services/transmission/config
+transmission_downloads_dir: {{project_root}}/config/services/transmission/downloads
+transmission_watch_dir: {{project_root}}/config/services/transmission/watch
+nextcloud_config_dir: {{project_root}}/config/services/nextcloud/config
+jellyfin_config_dir: {{project_root}}/config/services/jellyfin/config
+jellyfin_data_dir: {{project_root}}/config/services/jellyfin/data
 
 acme_domain: ${DOMAIN}
 acme_certs_dir: /media/certs/${ACME_DOMAIN}
@@ -68,6 +70,7 @@ mysql_password_wordpress: wordpress
 mysql_password_resourcespace: resourcespace
 mysql_password_matomo: matoma
 mysql_password_nextcloud: nextcloud
+mysql_password_azuracast: azur4c457
 up_unifi_default_url: 
 up_unifi_default_user: 
 up_unifi_default_pass: 
@@ -91,3 +94,11 @@ mysql_url_matomo: mysql://${MYSQL_USER_MATOMO}:${MYSQL_PASSWORD_MATOMO}@${MYSQL_
 mysql_user_nextcloud: nextcloud
 mysql_database_nextcloud: nextcloud
 mysql_url_nextcloud: mysql://${MYSQL_USER_NEXTCLOUD}:${MYSQL_PASSWORD_NEXTCLOUD}@${MYSQL_HOST}:${MYSQL_PORT}/${MYSQL_DATABASE_NEXTCLOUD}
+
+mysql_user_azuracast: azuracast
+mysql_database_azuracast: azuracast
+
+azuracast_version: latest
+azuracast_http_port: 80
+azuracast_https_port: 443
+azuracast_sftp_port: 2022

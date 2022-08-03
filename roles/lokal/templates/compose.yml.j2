@@ -198,7 +198,7 @@ services:
     image: linuxserver/jellyfin
     container_name: jellyfin
     environment:
-      PUID: ''{{ ansible_facts["ansible_user_uid"] }}''
+      PUID: '{{ ansible_facts["ansible_user_uid"] }}'
       PGID: '{{ ansible_facts["ansible_user_gid"] }}'
       TZ: '{{ ansible_facts["ansible_date_time"]["tz"] }}'
       JELLYFIN_PublishedServerUrl: https://${DOMAIN_JELLYFIN}
